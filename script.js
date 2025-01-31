@@ -1,3 +1,4 @@
-function mostrarMensagem() {
-  alert('Obrigado por entrar em contato!');
+function executarCodigo() {
+  const output = document.getElementById('output');
+  output.textContent = '13'; // Simulando a execução de print("13")
 }
