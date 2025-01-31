@@ -3,33 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site Simples no Netlify</title>
+  <title>Armazenamento RAW</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>Bem-vindo ao Meu Site!</h1>
-    <nav>
-      <a href="#">Início</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#contato">Contato</a>
-    </nav>
+    <h1>Armazenamento de RAW</h1>
+    <p>Exemplo básico para visualizar e simular execução de código Python.</p>
   </header>
 
   <main>
-    <section id="sobre">
-      <h2>Sobre Nós</h2>
-      <p>Este é um site simples hospedado no Netlify.</p>
+    <section>
+      <h2>Exemplo de Código Python</h2>
+      <pre>
+print("13")
+      </pre>
+      <button onclick="executarCodigo()">Executar Código</button>
     </section>
-
-    <section id="contato">
-      <h2>Contato</h2>
-      <button onclick="mostrarMensagem()">Clique para falar conosco</button>
-    </section>
+    <div id="output"></div>
   </main>
 
   <footer>
-    <p>&copy; 2025 Meu Site. Todos os direitos reservados.</p>
+    <p>&copy; 2025 Armazenamento RAW. Todos os direitos reservados.</p>
   </footer>
 
   <script src="script.js"></script>
