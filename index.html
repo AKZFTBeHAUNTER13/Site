@@ -6,18 +6,18 @@
   <title>Armazenamento RAW</title>
 </head>
 <body>
-  <h1>Armazenamento RAW Dinâmico</h1>
+  <h1>Armazenamento RAW</h1>
   <p><a href="#" id="loadFile">Mostrar HaunterHub RAW</a></p>
 
   <pre id="content"></pre>
 
   <script>
     document.getElementById('loadFile').addEventListener('click', function() {
-      // Faz uma requisição para o arquivo RAW hospedado no GitHub
+      // Pega o conteúdo do arquivo RAW do GitHub
       fetch('https://raw.githubusercontent.com/NIGHT163626/Haunter-Hub/refs/heads/main/Haunter%20Hub')
         .then(response => response.text())
         .then(data => {
-          // Exibe o conteúdo do arquivo como RAW no seu site
+          // Exibe o conteúdo como texto puro
           document.getElementById('content').textContent = data;
         })
         .catch(error => console.error('Erro ao carregar o arquivo:', error));
