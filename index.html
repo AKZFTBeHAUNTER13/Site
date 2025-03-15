@@ -7,19 +7,22 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <canvas id="particlesCanvas"></canvas>
+
     <h1>Soucer Lock</h1>
     <p>Proteja seus scripts Lua contra ataques de brute force</p>
 
     <div class="container">
-        <label for="fileInput" class="file-label">Escolher arquivo .lua</label>
-        <input type="file" id="fileInput" accept=".lua">
-        
+        <button id="uploadButton">Enviar Arquivo</button>
+        <input type="file" id="fileInput" accept=".lua" hidden>
+
         <button id="protectButton">Protect</button>
-        <button id="downloadButton" disabled>Download fileprotected</button>
+        <a id="downloadButton" style="display: none;">Download fileprotected</a>
 
         <p id="statusMessage"></p>
     </div>
 
+    <script src="particles.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
