@@ -1,29 +1,22 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soucer Lock - Obfuscador Lua Online</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link para o CSS externo -->
+    <title>Soucer Lock - Proteção Anti-Brute Force</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Soucer Lock</h1>
-        <p>Obfusque seu código Lua de forma fácil e rápida!</p>
-    </header>
+    <h1>Soucer Lock</h1>
+    <p>Proteja seus scripts Lua contra ataques de brute force</p>
 
-    <main>
+    <div class="container">
         <input type="file" id="fileInput" accept=".lua">
-        <button id="obfuscateButton">Obfuscar</button>
-        <textarea id="obfuscatedCode" rows="10" cols="50" readonly style="display: none;"></textarea>
-        <a id="downloadLink" style="display: none;">Download Obfuscado</a>
+        <button id="protectButton">Proteger</button>
         <p id="statusMessage"></p>
-    </main>
+        <a id="downloadLink">Baixar Script Protegido</a>
+    </div>
 
-    <footer>
-        <p>© 2023 Soucer Lock - Todos os direitos reservados.</p>
-    </footer>
-
-    <script src="script.js"></script> <!-- Link para o JavaScript externo -->
+    <script src="script.js"></script>
 </body>
 </html>
