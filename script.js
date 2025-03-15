@@ -1,7 +1,11 @@
+document.getElementById('uploadButton').addEventListener('click', () => {
+    document.getElementById('fileInput').click();
+});
+
 document.getElementById('protectButton').addEventListener('click', () => {
     const file = document.getElementById('fileInput').files[0];
     const statusMessage = document.getElementById('statusMessage');
-    const downloadLink = document.getElementById('downloadLink');
+    const downloadButton = document.getElementById('downloadButton');
 
     if (!file) {
         statusMessage.textContent = "Por favor, selecione um arquivo .lua.";
@@ -13,41 +17,35 @@ document.getElementById('protectButton').addEventListener('click', () => {
         const luaCode = event.target.result;
         statusMessage.textContent = "Adicionando proteção...";
 
-        // Adiciona um sistema de bloqueio após 3 tentativas erradas
         const protectedCode = `
             local tentativas = 0
             local maxTentativas = 3
-            local function verificarSenha(senha)
-                if senha == "minhaSenhaSegura123" then
+            local senhaCorreta = "minhaSenhaSegura123"
+
+            function verificarSenha(senha)
+                if senha == senhaCorreta then
                     print("Acesso concedido!")
                 else
                     tentativas = tentativas + 1
                     print("Senha incorreta! Tentativa: " .. tentativas)
                     if tentativas >= maxTentativas then
                         print("Muitas tentativas! Bloqueado.")
-                        return
+                        os.exit()
                     end
                 end
             end
-            verificarSenha("tentativaErrada") -- Exemplo de tentativa errada
-            verificarSenha("minhaSenhaSegura123") -- Exemplo de tentativa correta
-            
-            -- Código original protegido:
+
+            -- Código Original
             ${luaCode}
         `;
 
-        // Criar arquivo protegido
         const blob = new Blob([protectedCode], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
-        downloadLink.href = url;
-        downloadLink.download = 'protected.lua';
-        downloadLink.style.display = 'inline-block';
+        downloadButton.href = url;
+        downloadButton.download = "fileprotected.lua";
+        downloadButton.style.display = "block";
 
-        statusMessage.textContent = "Proteção aplicada com sucesso!";
-    };
-
-    reader.onerror = () => {
-        statusMessage.textContent = "Erro ao ler o arquivo.";
+        statusMessage.textContent = "Proteção adicionada!";
     };
 
     reader.readAsText(file);
