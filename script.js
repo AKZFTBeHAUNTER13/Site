@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const luaCode = event.target.result;
             statusMessage.textContent = "Obfuscando...";
 
-            // Obfuscação MUITO avançada (para dificultar a leitura)
-            const obfuscatedCode = advancedObfuscate(luaCode);
+            // Obfuscação EXTREMA
+            const obfuscatedCode = extremeObfuscate(luaCode);
 
             obfuscatedCodeArea.value = obfuscatedCode;
             obfuscatedCodeArea.style.display = 'block';
@@ -42,63 +42,67 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsText(file);
     });
 
-    function advancedObfuscate(code) {
-        let obfuscated = code;
+    function extremeObfuscate(code) {
+        let obfuscated = "";
 
-        // 1. Caracteres Unicode confusos
-        const unicodeReplacements = {
-            'a': '\u0430', // Cyrillic 'а'
-            'b': '\u03b2', // Greek 'β'
-            'e': '\u0435', // Cyrillic 'е'
-            'o': '\u03bf', // Greek 'ο'
-            'p': '\u0440', // Cyrillic 'р'
-            'A': '\u0410', // Cyrillic 'А'
-            'B': '\u0392', // Greek 'Β'
-            'E': '\u0415', // Cyrillic 'Е'
-            'O': '\u039f', // Greek 'Ο'
-            'P': '\u0420'  // Cyrillic 'Р'
-        };
+        // 1. Codificação Base64 (para tornar irreconhecível)
+        const base64Code = btoa(code);
 
-        for (const char in unicodeReplacements) {
-            const regex = new RegExp(char, 'g');
-            obfuscated = obfuscated.replace(regex, unicodeReplacements[char]);
+        // 2. Adicionar lixo e complexidade
+        let garbage = "";
+        for (let i = 0; i < 50; i++) {
+          garbage += String.fromCharCode(Math.floor(Math.random() * 255)); // Caracteres aleatórios
         }
 
-        // 2. Mistura de maiúsculas e minúsculas aleatórias
-        obfuscated = obfuscated.replace(/[a-zA-Z]/g, (char) => {
-            return Math.random() < 0.5 ? char.toUpperCase() : char.toLowerCase();
-        });
+        // 3. Criar um "decodificador" Lua (simples)
+        const decoder = `
+          local function decode(s)
+            local b = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+            s = string.gsub(s, "[^" .. b .. "=]", "")
+            local t = ""
+            local i = 1
+            while i <= #s do
+              local c1 = string.find(b, string.sub(s, i, i), 1, true) - 1
+              i = i + 1
+              local c2 = string.find(b, string.sub(s, i, i), 1, true) - 1
+              i = i + 1
+              local c3 = string.find(b, string.sub(s, i, i), 1, true) - 1
+              i = i + 1
+              local c4 = string.find(b, string.sub(s, i, i), 1, true) - 1
+              i = i + 1
+              local b1 = c1 << 2
+              local b2 = (c2 & 0x3f) >> 4
+              local b3 = (c2 & 0x0f) << 4
+              local b4 = (c3 & 0x3f) >> 2
+              local b5 = (c3 & 0x03) << 6
+              local b6 = c4
+              if c3 < 0 then
+                b6 = nil
+              end
+              if c4 < 0 then
+                b6 = nil
+                b5 = nil
+              end
+              t = t .. string.char(b1 + b2)
+              if b3 then
+                t = t .. string.char(b3 + b4)
+              end
+              if b5 then
+                t = t .. string.char(b5 + b6)
+              end
+            end
+            return t
+          end
+        `;
 
-        // 3. Números "empilhados" (Combining Diacritical Marks)
-        const combiningMarks = ["\u0300", "\u0301", "\u0302", "\u0303", "\u0304", "\u0305", "\u0306", "\u0307", "\u0308", "\u0309"]; // Exemplos
-        obfuscated = obfuscated.replace(/[0-9]/g, (digit) => {
-            let result = digit;
-            const numMarks = Math.floor(Math.random() * 3); // Até 2 marcas
-            for (let i = 0; i < numMarks; i++) {
-                result += combiningMarks[Math.floor(Math.random() * combiningMarks.length)];
-            }
-            return result;
-        });
-
-        // 4. Caracteres de controle (RTL/LTR overrides)
-        const rtl = '\u202B'; // Right-to-Left Override
-        const ltr = '\u202A'; // Left-to-Right Override
-        if (Math.random() < 0.3) {  // Adiciona em 30% das vezes
-            obfuscated = rtl + obfuscated + ltr;
-        }
-
-        // 5. Escape de strings complexo (exemplo)
-        obfuscated = obfuscated.replace(/(".*?")/g, (match) => {
-            let escaped = "";
-            for (let i = 0; i < match.length; i++) {
-                if (Math.random() < 0.5) {
-                    escaped += "\\x" + match.charCodeAt(i).toString(16); // Hexadecimal
-                } else {
-                    escaped += "\\u" + match.charCodeAt(i).toString(16).padStart(4, '0'); // Unicode
-                }
-            }
-            return escaped;
-        });
+        // 4. Montar o código final
+        obfuscated = `
+          ${garbage}
+          ${decoder}
+          local encoded = "${base64Code}"
+          local original = decode(encoded)
+          loadstring(original)()
+        `;
 
         return obfuscated;
     }
