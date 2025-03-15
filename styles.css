@@ -1,40 +1,36 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f8ff;
+    background-color: #0a0a2a;
+    color: white;
     text-align: center;
     padding: 50px;
-    color: #0044cc;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+canvas#particlesCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
 
 h1 {
-    color: #002a80;
+    color: #ffffff;
 }
 
 .container {
-    background: white;
+    background: rgba(0, 0, 30, 0.8);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     width: 50%;
     margin: auto;
 }
 
-.file-label {
-    display: block;
-    background: #0044cc;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-input[type="file"] {
-    display: none;
-}
-
-button {
+button, a {
     width: 200px;
     padding: 10px;
     margin: 10px;
@@ -42,6 +38,14 @@ button {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#uploadButton {
+    background: #0066ff;
+    color: white;
 }
 
 #protectButton {
@@ -49,26 +53,8 @@ button {
     color: white;
 }
 
-#protectButton:hover {
-    background: #003399;
-}
-
 #downloadButton {
-    background: #aaa;
-    color: white;
-    cursor: not-allowed;
-}
-
-#downloadButton.active {
     background: #008000;
-    cursor: pointer;
-}
-
-#downloadButton.active:hover {
-    background: #006400;
-}
-
-#statusMessage {
-    margin-top: 15px;
-    font-weight: bold;
+    color: white;
+    display: none;
 }
