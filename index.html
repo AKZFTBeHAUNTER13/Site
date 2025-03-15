@@ -11,10 +11,13 @@
     <p>Proteja seus scripts Lua contra ataques de brute force</p>
 
     <div class="container">
+        <label for="fileInput" class="file-label">Escolher arquivo .lua</label>
         <input type="file" id="fileInput" accept=".lua">
-        <button id="protectButton">Proteger</button>
+        
+        <button id="protectButton">Protect</button>
+        <button id="downloadButton" disabled>Download fileprotected</button>
+
         <p id="statusMessage"></p>
-        <a id="downloadLink">Baixar Script Protegido</a>
     </div>
 
     <script src="script.js"></script>
