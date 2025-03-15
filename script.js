@@ -45,63 +45,43 @@ document.addEventListener('DOMContentLoaded', () => {
     function extremeObfuscate(code) {
         let obfuscated = "";
 
-        // 1. Codificação Base64 (para tornar irreconhecível)
-        const base64Code = btoa(code);
+        // Codificação Base64
+        const base64Code = btoa(unescape(encodeURIComponent(code)));
 
-        // 2. Adicionar lixo e complexidade
+        // Lixo e complexidade
         let garbage = "";
         for (let i = 0; i < 50; i++) {
-          garbage += String.fromCharCode(Math.floor(Math.random() * 255)); // Caracteres aleatórios
+            garbage += String.fromCharCode(Math.floor(Math.random() * 255));
         }
 
-        // 3. Criar um "decodificador" Lua (simples)
+        // Decodificador Lua corrigido
         const decoder = `
-          local function decode(s)
-            local b = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-            s = string.gsub(s, "[^" .. b .. "=]", "")
-            local t = ""
-            local i = 1
-            while i <= #s do
-              local c1 = string.find(b, string.sub(s, i, i), 1, true) - 1
-              i = i + 1
-              local c2 = string.find(b, string.sub(s, i, i), 1, true) - 1
-              i = i + 1
-              local c3 = string.find(b, string.sub(s, i, i), 1, true) - 1
-              i = i + 1
-              local c4 = string.find(b, string.sub(s, i, i), 1, true) - 1
-              i = i + 1
-              local b1 = c1 << 2
-              local b2 = (c2 & 0x3f) >> 4
-              local b3 = (c2 & 0x0f) << 4
-              local b4 = (c3 & 0x3f) >> 2
-              local b5 = (c3 & 0x03) << 6
-              local b6 = c4
-              if c3 < 0 then
-                b6 = nil
-              end
-              if c4 < 0 then
-                b6 = nil
-                b5 = nil
-              end
-              t = t .. string.char(b1 + b2)
-              if b3 then
-                t = t .. string.char(b3 + b4)
-              end
-              if b5 then
-                t = t .. string.char(b5 + b6)
-              end
+            local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+            local function decode(data)
+                data = data:gsub('[^'..b..'=]', '')
+                local t, i, a = {}, 1, 1
+                while i <= #data do
+                    local c1, c2, c3, c4 =
+                        b:find(data:sub(i, i), 1, true) - 1,
+                        b:find(data:sub(i+1, i+1), 1, true) - 1,
+                        b:find(data:sub(i+2, i+2), 1, true) - 1 or 0,
+                        b:find(data:sub(i+3, i+3), 1, true) - 1 or 0
+                    i = i + 4
+                    local n = (c1 << 18) + (c2 << 12) + (c3 << 6) + c4
+                    t[a], t[a+1], t[a+2] = string.char((n >> 16) & 255), c3 > 0 and string.char((n >> 8) & 255) or nil, c4 > 0 and string.char(n & 255) or nil
+                    a = a + 3
+                end
+                return table.concat(t)
             end
-            return t
-          end
         `;
 
-        // 4. Montar o código final
+        // Código final obfuscado
         obfuscated = `
-          ${garbage}
-          ${decoder}
-          local encoded = "${base64Code}"
-          local original = decode(encoded)
-          loadstring(original)()
+            ${garbage}
+            ${decoder}
+            local encoded = "${base64Code}"
+            local original = decode(encoded)
+            load(original)()
         `;
 
         return obfuscated;
