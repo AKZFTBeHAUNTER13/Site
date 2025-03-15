@@ -19,37 +19,56 @@ h1 {
     margin: auto;
 }
 
-input, button {
-    margin-top: 10px;
+.file-label {
+    display: block;
+    background: #0044cc;
+    color: white;
     padding: 10px;
-    border: 2px solid #0044cc;
     border-radius: 5px;
-    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input[type="file"] {
+    display: none;
 }
 
 button {
-    background: #0044cc;
-    color: white;
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
 }
 
-button:hover {
+#protectButton {
+    background: #0044cc;
+    color: white;
+}
+
+#protectButton:hover {
     background: #003399;
+}
+
+#downloadButton {
+    background: #aaa;
+    color: white;
+    cursor: not-allowed;
+}
+
+#downloadButton.active {
+    background: #008000;
+    cursor: pointer;
+}
+
+#downloadButton.active:hover {
+    background: #006400;
 }
 
 #statusMessage {
     margin-top: 15px;
     font-weight: bold;
-}
-
-#downloadLink {
-    display: none;
-    margin-top: 20px;
-    font-size: 18px;
-    color: #0044cc;
-    text-decoration: none;
-}
-
-#downloadLink:hover {
-    text-decoration: underline;
 }
