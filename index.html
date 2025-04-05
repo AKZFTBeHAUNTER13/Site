@@ -1,116 +1,1128 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leitor de Arquivo</title>
+    <title>Sapphire | Ultimate Roblox Exploiting Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #fff;
-            text-align: center;
+        :root {
+            --primary: #0a0a0a;
+            --secondary: #0066ff;
+            --accent: #003d99;
+            --text: #f0f0f0;
+            --dark: #050505;
+            --glow: 0 0 15px rgba(0, 102, 255, 0.5);
+            --glow-intense: 0 0 25px rgba(0, 102, 255, 0.8);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: var(--glow); }
+            50% { box-shadow: var(--glow-intense); }
+            100% { box-shadow: var(--glow); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 5px rgba(0, 102, 255, 0.3); }
+            50% { text-shadow: 0 0 15px rgba(0, 102, 255, 0.7); }
+            100% { text-shadow: 0 0 5px rgba(0, 102, 255, 0.3); }
+        }
+        
+        @keyframes diamondGlow {
+            0% { box-shadow: 0 0 10px rgba(0, 102, 255, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(0, 102, 255, 0.8); }
+            100% { box-shadow: 0 0 10px rgba(0, 102, 255, 0.5); }
+        }
+        
+        @keyframes scanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100vh; }
+        }
+        
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
-        h2 {
-            color: #9b59b6;
+        
+        body {
+            font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
         }
-        .container {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
-            margin: auto;
-            box-shadow: 0 0 15px rgba(155, 89, 182, 0.5);
-        }
-        input[type="file"] {
-            display: none;
-        }
-        .custom-file-upload {
-            background: #9b59b6;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: inline-block;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        .custom-file-upload:hover {
-            background: #8e44ad;
-        }
-        textarea {
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 200px;
-            margin-top: 15px;
-            padding: 10px;
-            font-size: 16px;
-            background: #2c2c2c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            resize: none;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 102, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
         }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 102, 255, 0.03) 50%,
+                transparent 100%
+            );
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .dark-blue-diamond {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            transform: rotate(45deg);
+            position: relative;
+            animation: diamondGlow 3s infinite;
+            margin-right: 15px;
+        }
+        
+        .diamond-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .diamond-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            transform: rotate(45deg);
+            display: inline-block;
+            margin-right: 10px;
+            animation: diamondGlow 3s infinite;
+        }
+        
+        .diamond-icon-small {
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            transform: rotate(45deg);
+            display: inline-block;
+            margin-right: 8px;
+            animation: diamondGlow 3s infinite;
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        header {
+            background-color: rgba(10, 10, 10, 0.95);
+            padding: 25px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 102, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: textGlow 3s infinite;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 55px;
+            width: calc(100% - 55px);
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary), transparent);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 220px 0 180px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,102,255,0.15) 0%, rgba(10,10,10,0) 70%);
+            z-index: -1;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 82px;
+            margin-bottom: 30px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            animation: textGlow 3s infinite;
+            background: linear-gradient(to right, #fff, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 24px;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: #b0b0b0;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+        
         .btn {
-            background: #9b59b6;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
             color: white;
-            padding: 10px 15px;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            animation: pulse 2s infinite;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-            transition: transform 0.2s ease, background 0.3s;
+            font-family: 'Orbitron', sans-serif;
         }
+        
         .btn:hover {
-            background: #8e44ad;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.5);
         }
-        .btn:active {
-            transform: scale(0.95);
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
         }
-        .fade {
-            animation: fadeIn 0.3s ease-in-out;
+        
+        .btn:hover::before {
+            left: 100%;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,102,255,0.08) 0%, rgba(10,10,10,0) 70%);
+            z-index: -1;
+        }
+        
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            margin-bottom: 70px;
+            text-align: center;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 3px;
+            bottom: -15px;
+            left: 15%;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background-color: rgba(15, 15, 15, 0.7);
+            padding: 40px 30px;
+            border-radius: 10px;
+            border-left: 5px solid var(--secondary);
+            transition: all 0.5s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 102, 255, 0.1);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0,102,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), var(--glow);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+        }
+        
+        .feature-card:hover::before {
+            left: 100%;
+        }
+        
+        .feature-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-card p {
+            font-size: 18px;
+            color: #b0b0b0;
+            line-height: 1.8;
+        }
+        
+        .downloads {
+            background-color: rgba(15, 15, 15, 0.9);
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+        
+        .downloads::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--secondary), transparent);
+            opacity: 0.3;
+        }
+        
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            flex-wrap: wrap;
+        }
+        
+        .download-card {
+            background-color: var(--dark);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 102, 255, 0.1);
+            transition: all 0.5s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), transparent);
+        }
+        
+        .download-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), var(--glow);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+        }
+        
+        .download-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .download-card p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #b0b0b0;
+        }
+        
+        .faq-item {
+            background-color: rgba(15, 15, 15, 0.7);
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 102, 255, 0.1);
+        }
+        
+        .faq-item:hover {
+            border-left: 3px solid var(--secondary);
+        }
+        
+        .faq-question {
+            padding: 25px;
+            background-color: rgba(10, 10, 10, 0.7);
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .faq-question:hover {
+            background-color: rgba(0, 102, 255, 0.1);
+        }
+        
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s, padding 0.5s;
+            font-size: 18px;
+            color: #b0b0b0;
+            line-height: 1.8;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 25px 25px;
+            max-height: 500px;
+        }
+        
+        .faq-item.active .faq-question {
+            color: var(--secondary);
+        }
+        
+        .discord-section {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .discord-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,102,255,0.15) 0%, rgba(10,10,10,0) 70%);
+            z-index: -1;
+        }
+        
+        .discord-section p {
+            font-size: 22px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: #b0b0b0;
+        }
+        
+        .discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background-color: #5865F2;
+            color: white;
+            padding: 18px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .discord-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(88, 101, 242, 0.5);
+        }
+        
+        .discord-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .discord-btn:hover::before {
+            left: 100%;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.95);
+            padding: 50px 0;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(0, 102, 255, 0.2);
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+            opacity: 0.3;
+        }
+        
+        footer p {
+            font-size: 16px;
+            color: #b0b0b0;
+            margin-top: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .social-links a {
+            color: var(--text);
+            font-size: 24px;
+            transition: all 0.3s;
+            background-color: rgba(0, 102, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0, 102, 255, 0.3);
+        }
+        
+        .social-links a:hover {
+            color: white;
+            background-color: #5865F2;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.5);
+        }
+        
+        /* Particles */
+        canvas {
+            display: block;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 60px;
+            }
+            
+            .features {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+            
+            .download-options {
+                gap: 50px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 180px 0 100px;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero p {
+                font-size: 20px;
+            }
+            
+            h2 {
+                font-size: 36px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .download-options {
+                gap: 30px;
+            }
+            
+            .download-card {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .btn, .discord-btn {
+                padding: 15px 30px;
+                font-size: 16px;
+            }
+            
+            .feature-card, .download-card {
+                width: 100%;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .dark-blue-diamond {
+                width: 30px;
+                height: 30px;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="particles-js" class="particles"></div>
+    
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <div class="dark-blue-diamond"></div>
+                    SAPPHIRE
+                </div>
+                <div class="nav-links">
+                    <a href="#features"><span class="diamond-icon-small"></span>Features</a>
+                    <a href="#downloads"><span class="diamond-icon-small"></span>Downloads</a>
+                    <a href="#faq"><span class="diamond-icon-small"></span>FAQ</a>
+                    <a href="#discord"><span class="diamond-icon-small"></span>Discord</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1 data-aos="fade-up">UNLEASH THE POWER</h1>
+            <p data-aos="fade-up" data-aos-delay="100">Sapphire is the ultimate Roblox exploiting suite, offering premium features with unmatched performance. Experience the next generation of game enhancement with our powerful executor and curated scripts.</p>
+            <a href="#downloads" class="btn" data-aos="fade-up" data-aos-delay="200">
+                <div class="diamond-icon-small"></div>
+                DOWNLOAD NOW
+            </a>
+        </div>
+    </section>
+    
+    <section id="features">
+        <div class="container">
+            <h2 data-aos="fade-up">WHY CHOOSE SAPPHIRE</h2>
+            <div class="features">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3><div class="diamond-icon-small"></div>Blazing Fast Execution</h3>
+                    <p>Our optimized engine delivers the fastest script execution in the scene, with near-instant injection and minimal resource usage.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
+                    <h3><div class="diamond-icon-small"></div>Advanced Protection</h3>
+                    <p>State-of-the-art anti-detection keeps you safe while using Sapphire, with regular updates to stay ahead of game patches.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3><div class="diamond-icon-small"></div>Lua 5.1 Support</h3>
+                    <p>Full Lua 5.1 implementation with extensions for maximum compatibility with all popular scripts and libraries.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="250">
+                    <h3><div class="diamond-icon-small"></div>Script Hub Integration</h3>
+                    <p>Built-in script hub with auto-updating community scripts and premium-quality private releases.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <h3><div class="diamond-icon-small"></div>Custom UI Themes</h3>
+                    <p>Fully customizable interface with multiple themes and layout options to suit your preferences.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="350">
+                    <h3><div class="diamond-icon-small"></div>24/7 Support</h3>
+                    <p>Dedicated support team available around the clock in our Discord server to help with any issues.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="downloads" class="downloads">
+        <div class="container">
+            <h2 data-aos="fade-up">GET SAPPHIRE</h2>
+            <div class="download-options">
+                <div class="download-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-gem"></i>
+                    <h3>Sapphire Executor PC</h3>
+                    <p>Version 0.1</p>
+                    <p class="file-size">Windows 10/11 (64-bit)</p>
+                    <a href="/downloadPC" class="btn" style="margin-top: 15px;">DOWNLOAD</a>
+                </div>
+                <div class="download-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-gem"></i>
+                    <h3>Sapphire Executor Anroid</h3>
+                    <p>Version 0.1</p>
+                    <p class="file-size">Android</p>
+                    <a href="/downloadAndroid" class="btn" style="margin-top: 15px;">DOWNLOAD</a>
+                </div>
+                <div class="download-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-gem"></i>
+                    <h3>Sapphire Executor IOS</h3>
+                    <p>Coming Soon...</p>
+                    <p class="file-size">IOS</p>
+                    <a class="btn" style="margin-top: 15px;">Coming Soon</a>
+                </div>
+                <div class="download-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-code"></i>
+                    <h3>Sapphire Script</h3>
+                    <p>Latest Collection</p>
+                    <p class="file-size">Compatible with all executors</p>
+                    <button class="btn" style="margin-top: 15px;" onclick="copyScript()">GET SCRIPT</button>
 
-    <h2>Enviar Arquivo de Texto</h2>
-    <div class="container fade">
-        <label for="fileInput" class="custom-file-upload">Selecionar Arquivo</label>
-        <input type="file" id="fileInput" accept=".txt">
-        <textarea id="textBox" readonly></textarea>
-        <button class="btn" onclick="copyText()">Copiar Texto</button>
-    </div>
-
+                    <script>
+                      function copyScript() {
+                        const script = `loadstring(game:HttpGet("https://raw.githubusercontent.com/SapphireDevgg/Project-Sapphire/refs/heads/main/Sapphire%20Hub", true))()`;
+                        navigator.clipboard.writeText(script).then(() => {
+                          const notif = document.createElement("div");
+                          notif.textContent = " Script copied to clipboard!";
+                          
+                          // Styling the notification
+                          notif.style.position = "fixed";
+                          notif.style.bottom = "20px";
+                          notif.style.right = "20px";
+                          notif.style.backgroundColor = "#28a745";
+                          notif.style.color = "white";
+                          notif.style.padding = "16px 32px";
+                          notif.style.fontSize = "16px";
+                          notif.style.fontFamily = "Arial, sans-serif";
+                          notif.style.borderRadius = "12px";
+                          notif.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
+                          notif.style.zIndex = "9999";
+                          notif.style.opacity = "0";
+                          notif.style.transition = "opacity 0.5s ease, transform 0.3s ease-out";
+                          notif.style.transform = "translateY(20px)";
+                    
+                          // Adding some inner styling
+                          const icon = document.createElement("span");
+                          icon.textContent = "âœ…";
+                          icon.style.marginRight = "10px";
+                          notif.insertBefore(icon, notif.firstChild);
+                    
+                          // Append notification to body
+                          document.body.appendChild(notif);
+                    
+                          // Animation
+                          setTimeout(() => {
+                            notif.style.opacity = "1";
+                            notif.style.transform = "translateY(0)";
+                          }, 10);
+                    
+                          // Auto hide after 3 seconds
+                          setTimeout(() => {
+                            notif.style.opacity = "0";
+                            notif.style.transform = "translateY(20px)";
+                            setTimeout(() => document.body.removeChild(notif), 300);
+                          }, 3000);
+                        });
+                      }
+                    </script>
+                                                       
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="faq">
+        <div class="container">
+            <h2 data-aos="fade-up">FREQUENTLY ASKED QUESTIONS</h2>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="faq-question">
+                    <span><i class="fas fa-question-circle"></i> Is Sapphire safe to use?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, Sapphire is completely safe when downloaded from our official sources. We implement multiple security measures to ensure your system remains protected. However, we recommend using antivirus software as with any downloaded program.</p>
+                </div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
+                <div class="faq-question">
+                    <span><i class="fas fa-sync-alt"></i> How often is Sapphire updated?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>We release stability updates weekly and major feature updates monthly. Our team works constantly to ensure compatibility with the latest Roblox updates and to add new features requested by our community.</p>
+                </div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="faq-question">
+                    <span><i class="fas fa-laptop"></i> What are the system requirements for sapphire pc?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Windows 10 or 11</p>
+                </div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="250">
+                <div class="faq-question">
+                    <span><i class="fas fa-key"></i> Is there a key system?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Currently, Sapphire is completely free with no key system. We may implement optional premium features in the future, but the core functionality will always remain free to use.</p>
+                </div>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="faq-question">
+                    <span><i class="fas fa-ban"></i> Can I get banned for using Sapphire?</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>While we implement advanced anti-detection measures, using any third-party software with Roblox carries some risk. We recommend using alt accounts and being discreet with script usage to minimize detection chances.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="discord" class="discord-section">
+        <div class="container">
+            <h2 data-aos="fade-up">JOIN OUR COMMUNITY</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Connect with thousands of Sapphire users in our official Discord server. Get support, share scripts, and stay updated with the latest releases.</p>
+            <a href="https://discord.gg/Ypf4U7uHrH" class="discord-btn" data-aos="fade-up" data-aos-delay="200">
+                <i class="fab fa-discord"></i> JOIN DISCORD
+            </a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="logo" style="font-size: 28px; margin-bottom: 20px;">
+                <div class="dark-blue-diamond"></div>
+                SAPPHIRE
+            </div>
+            <div class="social-links">
+                <a href="https://discord.gg/Ypf4U7uHrH" target="_blank"><i class="fab fa-discord"></i></a>
+            </div>
+            <p>Â© 2025 Sapphire Executor. All rights reserved. | Not affiliated with Roblox Corporation.</p>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        document.getElementById('fileInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('textBox').value = e.target.result;
-                };
-                reader.readAsText(file);
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
             }
         });
-
-        function copyText() {
-            const textBox = document.getElementById('textBox');
-            textBox.select();
-            document.execCommand('copy');
-
-            const btn = document.querySelector('.btn');
-            btn.innerText = "Copiado!";
-            setTimeout(() => btn.innerText = "Copiar Texto", 1500);
-        }
+        
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+                
+                const plus = question.querySelector('span:last-child');
+                if (item.classList.contains('active')) {
+                    plus.textContent = '-';
+                } else {
+                    plus.textContent = '+';
+                }
+            });
+        });
+        
+        // Particles.js initialization
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#0066ff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#0066ff",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.5
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // Initialize animations on scroll
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
     </script>
-
 </body>
 </html>
